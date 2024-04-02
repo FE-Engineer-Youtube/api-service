@@ -2,7 +2,8 @@ module.exports = {
   apps: [
     {
       name: "express-api-cluster",
-      script: "node server.js",
+      script: "pnpm",
+      args: "server",
       instances: 4,
       port: 3000,
       max_memory_restart: "500M",
