@@ -1,0 +1,7 @@
+{
+	"dependencies": {
+		"@wesleytodd/openapi": "^1.0.0",
+		"express": "^4.19.2",
+		"qrcode": "^1.5.3"
+	}
+}
