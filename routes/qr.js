@@ -4,7 +4,12 @@ const openapi = require("@wesleytodd/openapi");
 const router = express.Router();
 // middleware that is specific to this router
 
-const allowedUrls = ["localhost:3000", "rapidapi.com", "by7e.me"];
+const allowedUrls = [
+  "localhost:3000",
+  "rapidapi.com",
+  "by7e.me",
+  "192.168.3.9:3000",
+];
 
 // define the home page route
 router.get("/", async (req, res) => {
