@@ -27,6 +27,7 @@ router.get("/", async (req, res) => {
   ) {
     res.status(401).send();
     res.end();
+    return;
   }
   try {
     const url = req.query.url || "https://example.com";
