@@ -31,6 +31,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/image", async (req, res) => {
+  console.log(req.headers.host);
   if (!allowedUrls.includes(req.headers.host)) {
     res.status(403).send("Forbidden");
     res.end();
