@@ -21,8 +21,11 @@ router.get("/", async (req, res) => {
 
   try {
     const url = req.query.url || "https://example.com";
-    const qrCodeImage = await QRCode.toDataURL(url);
-
+    const size = req.query.size || 200;
+    const qrCodeImage = await QRCode.toDataURL(url, {
+      errorCorrectionLevel: "M",
+      width: size,
+    });
     res.status(200).send({
       data: {
         base64: qrCodeImage,
