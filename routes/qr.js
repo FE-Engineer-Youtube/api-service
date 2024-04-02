@@ -21,6 +21,8 @@ const allowedUrls = [
 
 // define the home page route
 router.get("/", async (req, res) => {
+  console.log(req.headers);
+  console.log(process.env.NODE_ENV);
   if (
     process.env.NODE_ENV === "production" &&
     req.headers["X-RapidAPI-Proxy-Secret"] !== process.env.RAPID_SECRET
