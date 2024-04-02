@@ -22,7 +22,7 @@ const allowedUrls = [
 // define the home page route
 router.get("/", async (req, res) => {
   if (
-    req.headers.host !== "localhost:3000" &&
+    process.env.NODE_ENV === "production" &&
     req.headers["X-RapidAPI-Proxy-Secret"] !== process.env.RAPID_SECRET
   ) {
     res.status(401).send(messages[401]);
