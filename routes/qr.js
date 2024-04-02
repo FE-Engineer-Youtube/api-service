@@ -4,6 +4,14 @@ const openapi = require("@wesleytodd/openapi");
 const router = express.Router();
 // middleware that is specific to this router
 
+const dotenv = require("dotenv");
+
+const messages = {
+  403: { message: "You is Forbidded!" },
+  401: { message: "You shall not pass!" },
+  400: { message: "Missing required data" },
+};
+
 const allowedUrls = [
   "localhost:3000",
   "rapidapi.com",
@@ -13,6 +21,13 @@ const allowedUrls = [
 
 // define the home page route
 router.get("/", async (req, res) => {
+  if (
+    req.headers.host !== "localhost:3000" ||
+    req.headers["X-RapidAPI-Proxy-Secret"] !== process.env.RAPID_SECRET
+  ) {
+    res.status(401).send();
+    res.end();
+  }
   try {
     const url = req.query.url || "https://example.com";
     const size = req.query.size || 200;
@@ -26,6 +41,7 @@ router.get("/", async (req, res) => {
         text: url,
       },
     });
+    res.end();
   } catch (err) {
     console.error("Error generating QR code:", err);
     res.status(500).send("Internal Server Error");
