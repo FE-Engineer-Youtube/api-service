@@ -23,6 +23,7 @@ const allowedUrls = [
 router.get("/", async (req, res) => {
   console.log(req.headers);
   console.log(process.env.NODE_ENV);
+  console.log(process.env.RAPID_SECRET);
   if (
     process.env.NODE_ENV === "production" &&
     req.headers["x-rapidapi-proxy-secret"] !== process.env.RAPID_SECRET
