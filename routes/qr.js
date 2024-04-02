@@ -16,9 +16,6 @@ const messages = {
 
 // define the home page route
 router.get("/", async (req, res) => {
-  console.log(req.headers);
-  console.log(process.env.NODE_ENV);
-  console.log(process.env.RAPID_SECRET);
   if (
     process.env.NODE_ENV === "production" &&
     req.headers["x-rapidapi-proxy-secret"] !== process.env.RAPID_SECRET
@@ -41,9 +38,12 @@ router.get("/", async (req, res) => {
       },
     });
     res.end();
+    return;
   } catch (err) {
     console.error("Error generating QR code:", err);
     res.status(500).send("Internal Server Error");
+    res.end();
+    return;
   }
 });
 
@@ -66,9 +66,13 @@ router.get("/image", async (req, res) => {
       maskPattern: pattern,
     });
     res.send(`<img src="${qrCodeImage}" alt="QR Code"/>`);
+    res.end();
+    return;
   } catch (err) {
     console.error("Error generating QR code:", err);
     res.status(500).send("Internal Server Error");
+    res.end();
+    return;
   }
 });
 
