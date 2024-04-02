@@ -2,8 +2,8 @@ module.exports = {
   apps: [
     {
       name: "express-api-cluster",
-      script: "server.js",
-      instances: 4,
+      script: "./server.js",
+      instances: -1,
       port: 3000,
       max_memory_restart: "500M",
       exec_mode: "cluster_mode",

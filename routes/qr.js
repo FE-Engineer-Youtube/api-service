@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
   console.log(process.env.NODE_ENV);
   if (
     process.env.NODE_ENV === "production" &&
-    req.headers["X-RapidAPI-Proxy-Secret"] !== process.env.RAPID_SECRET
+    req.headers["x-rapidapi-proxy-secret"] !== process.env.RAPID_SECRET
   ) {
     res.status(401).send(messages[401]);
     res.end();
