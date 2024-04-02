@@ -13,12 +13,6 @@ const allowedUrls = [
 
 // define the home page route
 router.get("/", async (req, res) => {
-  if (!allowedUrls.includes(req.headers.host)) {
-    res.status(403).send("Forbidden");
-    res.end();
-    return;
-  }
-
   try {
     const url = req.query.url || "https://example.com";
     const size = req.query.size || 200;
