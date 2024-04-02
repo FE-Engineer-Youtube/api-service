@@ -6,6 +6,8 @@ const router = express.Router();
 
 const dotenv = require("dotenv");
 
+dotenv.config();
+
 const messages = {
   403: { message: "You is Forbidded!" },
   401: { message: "You shall not pass!" },
