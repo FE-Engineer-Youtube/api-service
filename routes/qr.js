@@ -14,13 +14,6 @@ const messages = {
   400: { message: "Missing required data" },
 };
 
-const allowedUrls = [
-  "localhost:3000",
-  "rapidapi.com",
-  "by7e.me",
-  "192.168.3.9:3000",
-];
-
 // define the home page route
 router.get("/", async (req, res) => {
   console.log(req.headers);
@@ -55,9 +48,11 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/image", async (req, res) => {
-  console.log(req.headers.host);
-  if (!allowedUrls.includes(req.headers.host)) {
-    res.status(403).send("Forbidden");
+  if (
+    process.env.NODE_ENV === "production" &&
+    req.headers["x-rapidapi-proxy-secret"] !== process.env.RAPID_SECRET
+  ) {
+    res.status(401).send(messages[401]);
     res.end();
     return;
   }
@@ -77,42 +72,42 @@ router.get("/image", async (req, res) => {
   }
 });
 
-const oapi = openapi({
-  openapi: "3.0.0",
-  info: {
-    title: "QR Open API Specs",
-    description: "QR Code generator generated api documents",
-    version: "1.0.0",
-  },
-});
+// const oapi = openapi({
+//   openapi: "3.0.0",
+//   info: {
+//     title: "QR Open API Specs",
+//     description: "QR Code generator generated api documents",
+//     version: "1.0.0",
+//   },
+// });
 
-router.use(oapi);
+// router.use(oapi);
 
 // To add path specific schema you can use the .path middleware
-router.get(
-  "/oapi",
-  oapi.path({
-    responses: {
-      200: {
-        description: "Successful response",
-        content: {
-          "application/json": {
-            schema: {
-              type: "object",
-              properties: {
-                hello: { type: "string" },
-              },
-            },
-          },
-        },
-      },
-    },
-  }),
-  (req, res) => {
-    res.json({
-      hello: "world",
-    });
-  }
-);
+// router.get(
+//   "/oapi",
+//   oapi.path({
+//     responses: {
+//       200: {
+//         description: "Successful response",
+//         content: {
+//           "application/json": {
+//             schema: {
+//               type: "object",
+//               properties: {
+//                 hello: { type: "string" },
+//               },
+//             },
+//           },
+//         },
+//       },
+//     },
+//   }),
+//   (req, res) => {
+//     res.json({
+//       hello: "world",
+//     });
+//   }
+// );
 
 module.exports = router;
