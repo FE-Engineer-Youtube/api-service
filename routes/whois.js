@@ -44,6 +44,8 @@ router.post(
 
       // Return the parsed WHOIS data in JSON format
       res.json(whoisData);
+      res.end();
+      return;
     });
   }
 );
@@ -94,6 +96,8 @@ router.get(
 
       // Return the parsed WHOIS data in JSON format
       res.json(whoisData);
+      res.end();
+      return;
     });
   }
 );
