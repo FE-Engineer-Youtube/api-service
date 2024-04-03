@@ -7,14 +7,9 @@ const router = express.Router();
 // middleware that is specific to this router
 
 const dotenv = require("dotenv");
+const { messages } = require("../utils/utils");
 
 dotenv.config();
-
-const messages = {
-  403: { message: "You is Forbidded!" },
-  401: { message: "You shall not pass!" },
-  400: { message: "Missing required data" },
-};
 
 router.get("/", async (req, res) => {
   if (
