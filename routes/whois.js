@@ -18,11 +18,9 @@ const validateApiKey = (req, res, next) => {
 };
 
 // Endpoint to get WHOIS data for a domain (POST)
-router.post("/", validateApiKey, async (req, res) => {
-  console.log(req.headers);
-  console.log(req.body);
+router.post("/", validateApiKey, validateUrl, async (req, res) => {
   // Execute WHOIS command
-  exec(`whois ${req.body.url || "google.com"}`, (error, stdout, stderr) => {
+  exec(`whois ${req.domain}`, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error executing WHOIS command: ${error.message}`);
       return handleErrors(res, 500);
