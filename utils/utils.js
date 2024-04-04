@@ -1,5 +1,5 @@
 const messages = {
-  400: { message: "Missing required data" },
+  400: { message: "It's not me, it's you..." },
   401: { message: "You shall not pass!" },
   403: { message: "You is Forbidded!" },
   404: { message: "No idea what you want?" },
