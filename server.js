@@ -1,15 +1,18 @@
 const express = require("express");
 const app = express();
 const validateApiKey = require("./utils/apiValidation");
+const cors = require("cors");
+
+// Parse JSON-encoded request bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cors("*")); // This Cross Origin Handling
 
 // Apply API key validation middleware to all routes
 app.use(validateApiKey);
 
-// Parse JSON-encoded request bodies
-app.use(express.json());
-
 // Parse URL-encoded request bodies
-app.use(express.urlencoded({ extended: true }));
 
 // Import and use all API route modules
 const apiRoutes = {

@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const { exec } = require("child_process");
-const validateUrl = require("../utils/urlSanitizer");
 const { handleErrors } = require("../utils/utils");
 const { parsePingResponse } = require("../utils/ping");
 const sanitizeUrl = require("../utils/pingSanitizer");
