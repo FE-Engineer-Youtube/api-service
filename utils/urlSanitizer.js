@@ -1,7 +1,7 @@
 // middleware/validateUrl.js
 
 const { validationResult } = require("express-validator");
-const handleErrors = require("../utils/errorHandler");
+const { handleErrors } = require("../utils/utils");
 const he = require("he");
 
 const validateUrl = (req, res, next) => {
