@@ -1,15 +1,24 @@
 const express = require("express");
-
 const app = express();
+const validateApiKey = require("./utils/apiValidation");
 
-app.get("/", (req, res) => {
-  res.send("Successful response.");
-});
+// Apply API key validation middleware to all routes
+app.use(validateApiKey);
 
-const qr = require("./routes/qr");
-app.use("/qr", qr);
+// Import and use all API route modules
+const apiRoutes = {
+  "/qr": require("./routes/qr"),
+  "/ping": require("./routes/ping"),
+  "/whois": require("./routes/whois"),
+};
 
-const ping = require("./routes/ping");
-app.use("/ping", ping);
+for (const [route, handler] of Object.entries(apiRoutes)) {
+  app.use(route, handler);
+}
 
-app.listen(3000, () => console.log("Example app is listening on port 3000."));
+// Other non-API routes can be defined here...
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () =>
+  console.log(`Example app is listening on port ${PORT}.`)
+);
