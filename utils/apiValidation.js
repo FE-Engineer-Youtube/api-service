@@ -1,11 +1,13 @@
 // utils/apiValidation.js
 
+const { handleErrors } = require("../utils/utils");
+
 const validateApiKey = (req, res, next) => {
   if (
     process.env.NODE_ENV === "production" &&
-    req.headers["x-rapidapi-proxy-secret"] !== process.env.RAPID_SECRET
+    !req.headers["x-rapidapi-proxy-secret"]
   ) {
-    res.status(401).send(messages[401]);
+    handleErrors(res, 401);
     return;
   }
   next();

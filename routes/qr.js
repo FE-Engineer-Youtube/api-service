@@ -5,6 +5,7 @@ const QRCode = require("qrcode");
 const router = express.Router();
 const dotenv = require("dotenv");
 const { messages } = require("../utils/utils");
+const { handleErrors } = require("../utils/utils");
 
 dotenv.config();
 
@@ -14,16 +15,10 @@ const validateApiKey = (req, res, next) => {
     process.env.NODE_ENV === "production" &&
     req.headers["x-rapidapi-proxy-secret"] !== process.env.RAPID_SECRET
   ) {
-    res.status(401).send(messages[401]);
+    handleErrors(res, 401);
     return;
   }
   next();
-};
-
-// Error handling middleware
-const errorHandler = (err, req, res, next) => {
-  console.error("Error generating QR code:", err);
-  res.status(500).send("Internal Server Error");
 };
 
 // Endpoint to generate QR code data
@@ -36,7 +31,7 @@ router.get("/data", validateApiKey, async (req, res, next) => {
     });
     res.status(200).send({ data: { base64: qrCodeImage, text: url } });
   } catch (err) {
-    next(err);
+    return handleErrors(err, 500, err);
   }
 });
 
@@ -62,26 +57,8 @@ router.get("/file", validateApiKey, async (req, res, next) => {
     fs.writeFileSync(filePath, buffer);
     res.download(filePath, "qrcode.png");
   } catch (err) {
-    next(err);
+    return handleErrors(err, 500, err);
   }
 });
-
-// Endpoint to display QR code image in HTML
-router.get("/image", validateApiKey, async (req, res, next) => {
-  try {
-    const { url = "https://example.com", size = 200, pattern = 0 } = req.query;
-    const qrCodeImage = await QRCode.toDataURL(url, {
-      errorCorrectionLevel: "M",
-      width: size,
-      maskPattern: pattern,
-    });
-    res.send(`<img src="${qrCodeImage}" alt="QR Code"/>`);
-  } catch (err) {
-    next(err);
-  }
-});
-
-// Apply error handling middleware
-router.use(errorHandler);
 
 module.exports = router;

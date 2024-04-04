@@ -5,8 +5,20 @@ const { parseWhoisResponse } = require("../utils/whois");
 const validateUrl = require("../utils/urlSanitizer");
 const { handleErrors } = require("../utils/utils");
 
+// Middleware to validate API key
+const validateApiKey = (req, res, next) => {
+  if (
+    process.env.NODE_ENV === "production" &&
+    req.headers["x-rapidapi-proxy-secret"] !== process.env.WEB_UTILITIES
+  ) {
+    handleErrors(res, 401);
+    return;
+  }
+  next();
+};
+
 // Endpoint to get WHOIS data for a domain (POST)
-router.post("/", validateUrl, async (req, res) => {
+router.post("/", validateApiKey, validateUrl, async (req, res) => {
   // Execute WHOIS command
   exec(`whois ${req.domain}`, (error, stdout, stderr) => {
     if (error) {
@@ -27,7 +39,7 @@ router.post("/", validateUrl, async (req, res) => {
 });
 
 // Endpoint to get WHOIS data for a domain (GET)
-router.get("/", validateUrl, async (req, res) => {
+router.get("/", validateApiKey, validateUrl, async (req, res) => {
   // Execute WHOIS command
   exec(`whois ${req.domain}`, (error, stdout, stderr) => {
     if (error) {
