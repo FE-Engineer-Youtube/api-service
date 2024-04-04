@@ -21,7 +21,7 @@ const validateApiKey = (req, res, next) => {
 router.post("/", validateApiKey, async (req, res) => {
   console.log(req.body || "no body");
   // Execute WHOIS command
-  exec(`whois ${req.body.url}`, (error, stdout, stderr) => {
+  exec(`whois ${req.body.url || "google.com"}`, (error, stdout, stderr) => {
     if (error) {
       console.error(`Error executing WHOIS command: ${error.message}`);
       return handleErrors(res, 500);
