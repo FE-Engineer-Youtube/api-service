@@ -6,7 +6,7 @@ const validateApiKey = require("./utils/apiValidation");
 app.use(validateApiKey);
 
 // Parse URL-encoded request bodies
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 // Parse JSON-encoded request bodies
 app.use(express.json());
 
