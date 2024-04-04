@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const validateApiKey = require("./utils/apiValidation");
+const cors = require("cors");
+
+app.use(cors("*")); // This Cross Origin Handling
 
 // Apply API key validation middleware to all routes
 app.use(validateApiKey);
