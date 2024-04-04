@@ -18,6 +18,7 @@ const validateApiKey = (req, res, next) => {
 };
 
 // Endpoint to get WHOIS data for a domain (POST)
+
 router.post("/", validateApiKey, validateUrl, async (req, res) => {
   // Execute WHOIS command
   exec(`whois ${req.domain}`, (error, stdout, stderr) => {
