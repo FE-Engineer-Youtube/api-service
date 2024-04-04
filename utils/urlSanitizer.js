@@ -12,6 +12,8 @@ const validateUrl = (req, res, next) => {
   }
 
   // Sanitize and format the URL
+
+  console.log(req);
   let domain = req.query.url || req.body.url;
   domain = domain.trim();
   domain = he.decode(domain);
