@@ -5,6 +5,8 @@ const cors = require("cors");
 
 // Parse JSON-encoded request bodies
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.multipart());
 
 app.use(cors("*")); // This Cross Origin Handling
 
@@ -12,7 +14,6 @@ app.use(cors("*")); // This Cross Origin Handling
 app.use(validateApiKey);
 
 // Parse URL-encoded request bodies
-app.use(express.urlencoded({ extended: true }));
 
 // Import and use all API route modules
 const apiRoutes = {
