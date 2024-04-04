@@ -11,7 +11,6 @@ const validateApiKey = (req, res, next) => {
     process.env.NODE_ENV === "production" &&
     req.headers["x-rapidapi-proxy-secret"] !== process.env.WEB_UTILITIES
   ) {
-    console.log("401 for whois validate api key inside");
     handleErrors(res, 401);
     return;
   }
