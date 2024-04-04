@@ -7,7 +7,10 @@ const { handleErrors } = require("../utils/utils");
 
 // Middleware to validate API key
 const validateApiKey = (req, res, next) => {
-  if (req.headers["x-rapidapi-proxy-secret"] !== process.env.WEB_UTILITIES) {
+  if (
+    process.env.NODE_ENV === "production" &&
+    req.headers["x-rapidapi-proxy-secret"] !== process.env.WEB_UTILITIES
+  ) {
     handleErrors(res, 401);
     return;
   }

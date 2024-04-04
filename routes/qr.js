@@ -11,7 +11,10 @@ dotenv.config();
 
 // Middleware to validate API key
 const validateApiKey = (req, res, next) => {
-  if (req.headers["x-rapidapi-proxy-secret"] !== process.env.RAPID_SECRET) {
+  if (
+    process.env.NODE_ENV === "production" &&
+    req.headers["x-rapidapi-proxy-secret"] !== process.env.RAPID_SECRET
+  ) {
     handleErrors(res, 401);
     return;
   }
@@ -57,8 +60,5 @@ router.get("/file", validateApiKey, async (req, res, next) => {
     return handleErrors(err, 500, err);
   }
 });
-
-// Apply error handling middleware
-router.use(errorHandler);
 
 module.exports = router;
