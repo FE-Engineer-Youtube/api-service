@@ -29,7 +29,7 @@ router.get("/data", validateApiKey, async (req, res, next) => {
       errorCorrectionLevel: "M",
       width: size,
     });
-    res.status(200).send({ data: { base64: qrCodeImage, text: url } });
+    return res.status(200).send({ data: { base64: qrCodeImage, text: url } });
   } catch (err) {
     return handleErrors(err, 500, err);
   }
@@ -55,7 +55,7 @@ router.get("/file", validateApiKey, async (req, res, next) => {
     const filename = `qrcode_${epochTime}.png`;
     const filePath = path.join(folderPath, filename);
     fs.writeFileSync(filePath, buffer);
-    res.download(filePath, "qrcode.png");
+    return res.download(filePath, "qrcode.png");
   } catch (err) {
     return handleErrors(err, 500, err);
   }

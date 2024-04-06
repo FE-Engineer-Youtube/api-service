@@ -54,7 +54,7 @@ router.get("/", validateApiKey, sanitizeUrl, async (req, res) => {
 
     // Parse the response
     const pingData = parsePingResponse(stdout);
-    res.json(pingData);
+    return res.status(200).json(pingData);
   });
 });
 
