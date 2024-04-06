@@ -34,7 +34,7 @@ router.post("/", validateApiKey, validateUrl, async (req, res) => {
     const whoisData = parseWhoisResponse(stdout);
 
     // Return the parsed WHOIS data in JSON format
-    res.json(whoisData);
+    return res.json(whoisData);
   });
 });
 
@@ -55,7 +55,7 @@ router.get("/", validateApiKey, validateUrl, async (req, res) => {
     const whoisData = parseWhoisResponse(stdout);
 
     // Return the parsed WHOIS data in JSON format
-    res.json(whoisData);
+    return res.json(whoisData);
   });
 });
 
