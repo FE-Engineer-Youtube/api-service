@@ -4,6 +4,8 @@ const validateUrl = require("../utils/urlSanitizer");
 const { handleErrors } = require("../utils/utils");
 const Tangerine = require("tangerine");
 
+const tangerine = new Tangerine();
+
 // Middleware to validate API key
 const validateApiKey = (req, res, next) => {
   if (
@@ -16,24 +18,22 @@ const validateApiKey = (req, res, next) => {
   next();
 };
 
-// Endpoint to get DNS data for a domain (GET)
 router.get("/", validateApiKey, validateUrl, async (req, res) => {
-  // Execute WHOIS command
-  const tangerine = new Tangerine();
-
-  const records = await tangerine.resolveAny(req.domain);
-
-  return res.status(200).json(records);
+  try {
+    const records = await tangerine.resolveAny(req.domain);
+    return res.status(200).json(records);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
 });
 
-// Endpoint to get DNS data for a domain (GET)
 router.post("/", validateApiKey, validateUrl, async (req, res) => {
-  // Execute WHOIS command
-  const tangerine = new Tangerine();
-
-  const records = await tangerine.resolveAny(req.domain);
-
-  return res.status(200).json(records);
+  try {
+    const records = await tangerine.resolveAny(req.domain);
+    return res.status(200).json(records);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
 });
 
 module.exports = router;
