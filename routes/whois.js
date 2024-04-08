@@ -1,11 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { exec } = require("child_process");
-const { parseWhoisResponse } = require("../utils/whois");
 const validateUrl = require("../utils/urlSanitizer");
 const { handleErrors } = require("../utils/utils");
-const Tangerine = require("tangerine");
-
+const whois = require("whois");
 // Middleware to validate API key
 const validateApiKey = (req, res, next) => {
   if (
@@ -20,56 +17,24 @@ const validateApiKey = (req, res, next) => {
 
 // Endpoint to get WHOIS data for a domain (POST)
 router.post("/", validateApiKey, validateUrl, async (req, res) => {
-  // Execute WHOIS command
-  exec(`whois ${req.domain}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error executing WHOIS command: ${error.message}`);
-      return handleErrors(res, 500);
-    }
-    if (stderr) {
-      console.error(`WHOIS command encountered an error: ${stderr}`);
-      return handleErrors(res, 400);
-    }
+  try {
+    const res = await whois.lookup(req.domain);
 
-    // Parse the WHOIS response
-    const whoisData = parseWhoisResponse(stdout);
-
-    // Return the parsed WHOIS data in JSON format
-    return res.json(whoisData);
-  });
+    return res.status(200).json(whoisData);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
 });
 
 // Endpoint to get WHOIS data for a domain (GET)
 router.get("/", validateApiKey, validateUrl, async (req, res) => {
-  // Execute WHOIS command
-  exec(`whois ${req.domain}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error executing WHOIS command: ${error.message}`);
-      return handleErrors(res, 500);
-    }
-    if (stderr) {
-      console.error(`WHOIS command encountered an error: ${stderr}`);
-      return handleErrors(res, 400);
-    }
+  try {
+    const res = await whois.lookup(req.domain);
 
-    // Parse the WHOIS response
-    const whoisData = parseWhoisResponse(stdout);
-
-    // Return the parsed WHOIS data in JSON format
-    return res.json(whoisData);
-  });
-});
-
-// Endpoint to get WHOIS data for a domain (GET)
-router.get("/test", validateApiKey, validateUrl, async (req, res) => {
-  // Execute WHOIS command
-  const tangerine = new Tangerine();
-
-  const records = await tangerine.resolveAny(req.domain);
-
-  console.log(records);
-
-  return res.status(200).json(records);
+    return res.status(200).json(whoisData);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
 });
 
 module.exports = router;
