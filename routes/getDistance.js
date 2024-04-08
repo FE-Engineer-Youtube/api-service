@@ -59,19 +59,6 @@ router.post("/", validateApiKey, async (req, res) => {
   }
 });
 
-async function extractBody(request) {
-  const dec = new TextDecoder();
-  const reader = request.body.getReader();
-  let body = "";
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) return body;
-
-    body = body + dec.decode(value);
-  }
-}
-
 router.post("/test", validateApiKey, async (req, res) => {
   console.log(req.body);
 
