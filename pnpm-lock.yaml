@@ -20,9 +20,6 @@ dependencies:
   express-validator:
     specifier: ^7.0.1
     version: 7.0.1
-  geo-distance-js:
-    specifier: ^1.0.0
-    version: 1.0.0
   he:
     specifier: ^1.2.0
     version: 1.2.0
@@ -648,11 +645,6 @@ packages:
 
   /function-bind@1.1.2:
     resolution: {integrity: sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==}
-    dev: false
-
-  /geo-distance-js@1.0.0:
-    resolution: {integrity: sha512-pbVc32xBTQp002p/278NKQ64eMJXfWkVo90rMqVIVKSobYCsynamZ1yQ7wCG9bWza5IkhFtlu0oE3//PKKCFNQ==}
-    engines: {node: ~0.10.0}
     dev: false
 
   /get-caller-file@2.0.5:
