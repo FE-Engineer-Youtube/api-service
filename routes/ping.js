@@ -17,28 +17,6 @@ const validateApiKey = (req, res, next) => {
   next();
 };
 
-// Endpoint to get WHOIS data for a domain (POST)
-// router.post("/", validateApiKey, validateUrl, async (req, res) => {
-//   // Execute WHOIS command
-//   exec(`ping -c 4 ${url}`, (error, stdout, stderr) => {
-//     if (error) {
-//       console.error(`Error executing Ping command: ${error.message}`);
-//       return handleErrors(res, 500);
-//     }
-//     if (stderr) {
-//       console.error(`Ping command encountered an error: ${stderr}`);
-//       return handleErrors(res, 400);
-//     }
-
-//     // Parse the WHOIS response
-//     const whoisData = parseWhoisResponse(stdout);
-
-//     // Return the parsed WHOIS data in JSON format
-//     res.json(whoisData);
-//   });
-// });
-
-// Endpoint to get WHOIS data for a domain (GET)
 router.get("/", validateApiKey, sanitizeUrl, async (req, res) => {
   const url = req.sanitizedUrl;
   // Execute ping command
