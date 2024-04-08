@@ -21,7 +21,7 @@ router.post("/", validateApiKey, validateUrl, async (req, res) => {
 
     return res.status(200).json(whois);
   } catch (err) {
-    return handleErrors(err, 500, err);
+    return handleErrors(res, 500, err);
   }
 });
 
@@ -31,7 +31,7 @@ router.get("/", validateApiKey, validateUrl, async (req, res) => {
 
     return res.status(200).json(whois);
   } catch (err) {
-    return handleErrors(err, 500, err);
+    return handleErrors(res, 500, err);
   }
 });
 

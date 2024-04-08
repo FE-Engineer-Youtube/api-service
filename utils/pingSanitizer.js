@@ -16,10 +16,7 @@ const sanitizeUrl = (req, res, next) => {
     return handleErrors(res, 400);
   }
 
-  // Strip out "https://" from the beginning of the URL if present
   url = url.replace(/http(s)?:\/\//g, "");
-
-  // Attach sanitized URL to the request object
   req.sanitizedUrl = url;
   next();
 };

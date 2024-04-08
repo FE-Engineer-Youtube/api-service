@@ -4,6 +4,7 @@ const { exec } = require("child_process");
 const { handleErrors } = require("../utils/utils");
 const { parsePingResponse } = require("../utils/ping");
 const sanitizeUrl = require("../utils/pingSanitizer");
+const { ping } = require("tcp-ping-node");
 
 // Middleware to validate API key
 const validateApiKey = (req, res, next) => {
@@ -19,21 +20,28 @@ const validateApiKey = (req, res, next) => {
 
 router.get("/", validateApiKey, sanitizeUrl, async (req, res) => {
   const url = req.sanitizedUrl;
-  // Execute ping command
-  exec(`ping -c 6 -i 0.2 ${url}`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error executing Ping command: ${error.message}`);
-      return handleErrors(res, 500);
-    }
-    if (stderr) {
-      console.error(`Ping command encountered an error: ${stderr}`);
-      return handleErrors(res, 400);
-    }
+  const { port = 443 } = req.query;
 
-    // Parse the response
-    const pingData = parsePingResponse(stdout);
-    return res.status(200).json(pingData);
-  });
+  try {
+    let data = await ping({ host: url, port: port, timeout: 1000 });
+
+    return res.status(200).send(data);
+  } catch (err) {
+    return handleErrors(res, 400, err);
+  }
+});
+
+router.post("/", validateApiKey, sanitizeUrl, async (req, res) => {
+  const url = req.sanitizedUrl;
+  const { port = 443 } = req.body;
+
+  try {
+    let data = await ping({ host: url, port: port, timeout: 1000 });
+
+    return res.status(200).send(data);
+  } catch (err) {
+    return handleErrors(res, 400, err);
+  }
 });
 
 module.exports = router;
