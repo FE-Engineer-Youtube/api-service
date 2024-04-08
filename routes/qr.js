@@ -39,7 +39,7 @@ router.get("/data", validateApiKey, async (req, res) => {
     });
     return res.status(200).send({ data: { base64: qrCodeImage, text: url } });
   } catch (err) {
-    return handleErrors(err, 500, err);
+    return handleErrors(res, 500, err);
   }
 });
 
@@ -63,7 +63,7 @@ router.post("/data", validateApiKey, async (req, res) => {
     });
     return res.status(200).send({ data: { base64: qrCodeImage, text: url } });
   } catch (err) {
-    return handleErrors(err, 500, err);
+    return handleErrors(res, 500, err);
   }
 });
 
@@ -91,7 +91,7 @@ router.get("/file", validateApiKey, async (req, res) => {
     res.setHeader("Content-Type", "image/png");
     return res.status(200).send(buffer);
   } catch (err) {
-    return handleErrors(err, 500, err);
+    return handleErrors(res, 500, err);
   }
 });
 
@@ -118,7 +118,7 @@ router.post("/file", validateApiKey, async (req, res) => {
     res.setHeader("Content-Type", "image/png");
     return res.status(200).send(buffer);
   } catch (err) {
-    return handleErrors(err, 500, err);
+    return handleErrors(res, 500, err);
   }
 });
 
