@@ -20,6 +20,7 @@ const apiRoutes = {
   "/ping": require("./routes/ping"),
   "/whois": require("./routes/whois"),
   "/health": require("./routes/health"),
+  "/dns": require("./routes/dns"),
 };
 
 for (const [route, handler] of Object.entries(apiRoutes)) {
@@ -29,8 +30,6 @@ for (const [route, handler] of Object.entries(apiRoutes)) {
 // Other non-API routes can be defined here...
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () =>
-  console.log(`Example app is listening on port ${PORT}.`)
-);
+app.listen(PORT, () => console.log(`API's are listening on port ${PORT}.`));
 
 module.exports = app;

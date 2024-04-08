@@ -4,6 +4,7 @@ const { exec } = require("child_process");
 const { parseWhoisResponse } = require("../utils/whois");
 const validateUrl = require("../utils/urlSanitizer");
 const { handleErrors } = require("../utils/utils");
+const Tangerine = require("tangerine");
 
 // Middleware to validate API key
 const validateApiKey = (req, res, next) => {
@@ -57,6 +58,18 @@ router.get("/", validateApiKey, validateUrl, async (req, res) => {
     // Return the parsed WHOIS data in JSON format
     return res.json(whoisData);
   });
+});
+
+// Endpoint to get WHOIS data for a domain (GET)
+router.get("/test", validateApiKey, validateUrl, async (req, res) => {
+  // Execute WHOIS command
+  const tangerine = new Tangerine();
+
+  const records = await tangerine.resolveAny(req.domain);
+
+  console.log(records);
+
+  return res.status(200).json(records);
 });
 
 module.exports = router;
