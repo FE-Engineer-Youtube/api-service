@@ -45,17 +45,17 @@ router.get("/file", validateApiKey, async (req, res, next) => {
     });
     const base64Data = qrCodeImage.replace(/^data:image\/png;base64,/, "");
     const buffer = Buffer.from(base64Data, "base64");
-    const currentDate = new Date();
-    const year = currentDate.getFullYear().toString();
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    const folderPath = path.join(__dirname, "../images", year, month, day);
-    fs.mkdirSync(folderPath, { recursive: true });
-    const epochTime = Date.now();
-    const filename = `qrcode_${epochTime}.png`;
-    const filePath = path.join(folderPath, filename);
-    fs.writeFileSync(filePath, buffer);
-    return res.download(filePath, "qrcode.png");
+    // const currentDate = new Date();
+    // const year = currentDate.getFullYear().toString();
+    // const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+    // const day = String(currentDate.getDate()).padStart(2, "0");
+    // const folderPath = path.join(__dirname, "../images", year, month, day);
+    // fs.mkdirSync(folderPath, { recursive: true });
+    // const epochTime = Date.now();
+    // const filename = `qrcode_${epochTime}.png`;
+    // const filePath = path.join(folderPath, filename);
+    // fs.writeFileSync(filePath, buffer);
+    return res.download(buffer, `${url}.png`);
   } catch (err) {
     return handleErrors(err, 500, err);
   }
