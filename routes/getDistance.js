@@ -39,9 +39,45 @@ router.get("/", validateApiKey, async (req, res) => {
 });
 
 router.post("/", validateApiKey, async (req, res) => {
-  console.log(req.body);
   const pos1 = { lat: req.body.p1Lat, lon: req.body.p1Long };
   const pos2 = { lat: req.body.p2Lat, lon: req.body.p2Long };
+  const unit = req.body.unit || "mi";
+  const showUnits = req.body.showUnits === "true";
+  try {
+    const distance = await geo.calculateDistance(pos1, pos2, {
+      unit: unit === "mi" ? "mi" : "km",
+      format: showUnits,
+    });
+    return res.status(200).json({
+      data: {
+        distance: distance,
+        units: unit === "mi" ? "miles" : "kilometers",
+      },
+    });
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+});
+
+async function extractBody(request) {
+  const dec = new TextDecoder();
+  const reader = request.body.getReader();
+  let body = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) return body;
+
+    body = body + dec.decode(value);
+  }
+}
+
+router.post("/test", validateApiKey, async (req, res) => {
+  console.log(req.body);
+
+  const { p1, p2 } = req.body;
+  const pos1 = { lat: p1.Lat, lon: p1.Long };
+  const pos2 = { lat: p2.Lat, lon: p2.Long };
   const unit = req.body.unit || "mi";
   const showUnits = req.body.showUnits === "true";
   try {
