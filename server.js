@@ -19,7 +19,6 @@ const apiRoutes = {
   "/qr": require("./routes/qr"),
   "/ping": require("./routes/ping"),
   "/whois": require("./routes/whois"),
-  "/ping": require("./routes/ping"),
   "/health": require("./routes/health"),
 };
 
