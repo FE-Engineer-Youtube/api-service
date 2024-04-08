@@ -30,8 +30,8 @@ router.get("/data", validateApiKey, async (req, res) => {
     } = req.query;
     const qrCodeImage = await QRCode.toDataURL(url, {
       errorCorrectionLevel: "M",
-      width: +size,
-      margin: +margin,
+      width: size,
+      margin: margin,
       color: {
         dark: `#${colorDark}`,
         light: `#${colorLight}`,
@@ -54,7 +54,7 @@ router.post("/data", validateApiKey, async (req, res) => {
     } = req.body;
     const qrCodeImage = await QRCode.toDataURL(url, {
       errorCorrectionLevel: "M",
-      width: +size,
+      width: size,
       margin: +margin,
       color: {
         dark: `#${colorDark}`,
@@ -79,8 +79,8 @@ router.get("/file", validateApiKey, async (req, res) => {
     } = req.query;
     const qrCodeImage = await QRCode.toDataURL(url, {
       errorCorrectionLevel: "M",
-      width: +size,
-      margin: +margin,
+      width: size,
+      margin: margin,
       color: {
         dark: `#${colorDark}`,
         light: `#${colorLight}`,
@@ -106,8 +106,8 @@ router.post("/file", validateApiKey, async (req, res) => {
     } = req.body;
     const qrCodeImage = await QRCode.toDataURL(url, {
       errorCorrectionLevel: "M",
-      width: +size,
-      margin: +margin,
+      width: size,
+      margin: margin,
       color: {
         dark: `#${colorDark}`,
         light: `#${colorLight}`,
