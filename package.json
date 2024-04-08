@@ -10,6 +10,8 @@
     "express": "^4.19.2",
     "express-validator": "^7.0.1",
     "he": "^1.2.0",
-    "qrcode": "^1.5.3"
+    "qrcode": "^1.5.3",
+    "tangerine": "^1.5.4",
+    "undici": "^6.11.1"
   }
 }
