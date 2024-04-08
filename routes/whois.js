@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const validateUrl = require("../utils/urlSanitizer");
 const { handleErrors } = require("../utils/utils");
-const whois = require("whois");
+const whoiser = require("whoiser");
 // Middleware to validate API key
 const validateApiKey = (req, res, next) => {
   if (
@@ -15,25 +15,23 @@ const validateApiKey = (req, res, next) => {
   next();
 };
 
-// Endpoint to get WHOIS data for a domain (POST)
 router.post("/", validateApiKey, validateUrl, async (req, res) => {
   try {
-    const res = await whois.lookup(req.domain);
+    const whois = await whoiser(req.domain);
 
-    return res.status(200).json(whoisData);
+    return res.status(200).json(whois);
   } catch (err) {
-    return res.status(400).json(err);
+    return handleErrors(err, 500, err);
   }
 });
 
-// Endpoint to get WHOIS data for a domain (GET)
 router.get("/", validateApiKey, validateUrl, async (req, res) => {
   try {
-    const res = await whois.lookup(req.domain);
+    const whois = await whoiser(req.domain);
 
-    return res.status(200).json(whoisData);
+    return res.status(200).json(whois);
   } catch (err) {
-    return res.status(400).json(err);
+    return handleErrors(err, 500, err);
   }
 });
 
