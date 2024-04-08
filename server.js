@@ -29,6 +29,10 @@ for (const [route, handler] of Object.entries(apiRoutes)) {
 
 // Other non-API routes can be defined here...
 
+app.get("/", (req, res) => {
+  res.send("Express on Vercel");
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () =>
   console.log(`Example app is listening on port ${PORT}.`)
