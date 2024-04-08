@@ -10,6 +10,7 @@
     "express": "^4.19.2",
     "express-validator": "^7.0.1",
     "he": "^1.2.0",
+    "nodejs-geolocation": "^2.3.0",
     "qrcode": "^1.5.3",
     "server-health": "^5.3.0",
     "tangerine": "^1.5.4",

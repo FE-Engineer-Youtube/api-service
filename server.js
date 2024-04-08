@@ -21,6 +21,7 @@ const apiRoutes = {
   "/ping": require("./routes/ping"),
   "/whois": require("./routes/whois"),
   "/dns": require("./routes/dns"),
+  "/getDistance": require("./routes/getDistance"),
 };
 
 for (const [route, handler] of Object.entries(apiRoutes)) {
