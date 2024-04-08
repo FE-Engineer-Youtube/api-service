@@ -45,6 +45,6 @@ router.get("/", validateApiKey, async (req, res) => {
 //   } catch (err) {
 //     return res.status(400).json(err);
 //   }
-});
+//});
 
 module.exports = router;
