@@ -35,6 +35,9 @@ dependencies:
   whois:
     specifier: ^2.14.0
     version: 2.14.0
+  whoiser:
+    specifier: ^1.17.3
+    version: 1.17.3
 
 packages:
 
@@ -1444,6 +1447,13 @@ packages:
       socks: 2.8.1
       underscore: 1.13.6
       yargs: 15.4.1
+    dev: false
+
+  /whoiser@1.17.3:
+    resolution: {integrity: sha512-4Ywn60p1AeshYCnYQbtQhWYuKVv9T4WMzTlsOV6hhlo/Ut19EY0bNPKWAx3UwFLxYAF9TYOkTIaZ5hjrKcb/vg==}
+    engines: {node: '>=15.0.0'}
+    dependencies:
+      punycode: 2.3.1
     dev: false
 
   /wrap-ansi@6.2.0:
