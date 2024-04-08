@@ -55,7 +55,8 @@ router.get("/file", validateApiKey, async (req, res, next) => {
     // const filename = `qrcode_${epochTime}.png`;
     // const filePath = path.join(folderPath, filename);
     // fs.writeFileSync(filePath, buffer);
-    return res.download(buffer, `${url}.png`);
+    response.set("Content-disposition", `attachment; filename=${url}.png`);
+    return res.json(buffer);
   } catch (err) {
     return handleErrors(err, 500, err);
   }
