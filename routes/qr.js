@@ -56,7 +56,7 @@ router.get("/file", validateApiKey, async (req, res, next) => {
     // const filePath = path.join(folderPath, filename);
     // fs.writeFileSync(filePath, buffer);
     res.set("Content-disposition", `attachment; filename=${url}.png`);
-    return res.json(buffer);
+    return res.status(200).download(buffer, `${url}.png`);
   } catch (err) {
     return handleErrors(err, 500, err);
   }
