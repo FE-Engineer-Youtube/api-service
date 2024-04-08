@@ -40,8 +40,8 @@ router.get("/", validateApiKey, async (req, res) => {
 
 router.post("/", validateApiKey, async (req, res) => {
   console.log(req.body);
-  const pos1 = { lat: req.body.p1.Lat, lon: req.body.p1.Long };
-  const pos2 = { lat: req.body.p2.Lat, lon: req.body.p2.Long };
+  const pos1 = { lat: req.body.p1Lat, lon: req.body.p1Long };
+  const pos2 = { lat: req.body.p2Lat, lon: req.body.p2Long };
   const unit = req.body.unit || "mi";
   const showUnits = req.body.showUnits === "true";
   try {
