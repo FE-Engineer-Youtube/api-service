@@ -21,7 +21,7 @@ router.get("/", validateApiKey, async (req, res) => {
   const pos1 = { lat: req.query.p1Lat, lon: req.query.p1Long };
   const pos2 = { lat: req.query.p2Lat, lon: req.query.p2Long };
   const unit = req.query.unit || "mi";
-  const showUnits = req.query.show === "true";
+  const showUnits = req.query.showUnits === "true";
   try {
     const distance = await geo.calculateDistance(pos1, pos2, {
       unit: unit === "mi" ? "mi" : "km",
@@ -38,13 +38,25 @@ router.get("/", validateApiKey, async (req, res) => {
   }
 });
 
-// router.post("/", validateApiKey, async (req, res) => {
-//   try {
-//     const records = await tangerine.resolveAny(req.domain);
-//     return res.status(200).json(records);
-//   } catch (err) {
-//     return res.status(400).json(err);
-//   }
-//});
+router.post("/", validateApiKey, async (req, res) => {
+  const pos1 = { lat: req.body.p1.Lat, lon: req.body.p1.Long };
+  const pos2 = { lat: req.body.p2.Lat, lon: req.body.p2.Long };
+  const unit = req.body.unit || "mi";
+  const showUnits = req.body.showUnits === "true";
+  try {
+    const distance = await geo.calculateDistance(pos1, pos2, {
+      unit: unit === "mi" ? "mi" : "km",
+      format: showUnits,
+    });
+    return res.status(200).json({
+      data: {
+        distance: distance,
+        units: unit === "mi" ? "miles" : "kilometers",
+      },
+    });
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+});
 
 module.exports = router;
