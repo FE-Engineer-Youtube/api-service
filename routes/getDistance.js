@@ -38,13 +38,13 @@ router.get("/", validateApiKey, async (req, res) => {
   }
 });
 
-router.post("/", validateApiKey, async (req, res) => {
-  try {
-    const records = await tangerine.resolveAny(req.domain);
-    return res.status(200).json(records);
-  } catch (err) {
-    return res.status(400).json(err);
-  }
+// router.post("/", validateApiKey, async (req, res) => {
+//   try {
+//     const records = await tangerine.resolveAny(req.domain);
+//     return res.status(200).json(records);
+//   } catch (err) {
+//     return res.status(400).json(err);
+//   }
 });
 
 module.exports = router;
